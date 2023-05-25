@@ -85,9 +85,13 @@ export const styles = StyleSheet.create({
     color: "#333",
     textAlign: "left",
   },
+  completedWorkoutTime: {
+    fontSize: 13,
+    color: "#6d6b73"
+  },
   completedWorkoutDetails: {
     fontSize: 16,
-    color: "#888",
+    color: "#54545a",
     padding: 5,
     textAlign: "left",
   },

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { styles } from "./style/style";
 import { DUMMY_COMPLETED_WORKOUT } from "./dummy";
+import { formatTime } from "./Helper/util";
 
 const { height } = Dimensions.get("window");
 
@@ -44,6 +45,7 @@ const Gym = () => {
         name: workoutName,
         reps: workoutReps,
         weights: workoutWeights,
+        time: new Date().getTime(),
       };
       setCompletedWorkouts([...completedWorkouts, workout]);
       setWorkoutName("");
@@ -60,8 +62,8 @@ const Gym = () => {
       duration: 1,
       useNativeDriver: true,
     }).start();
-    setWorkoutName('')
-    setWorkoutReps('')
+    setWorkoutName("");
+    setWorkoutReps("");
   };
 
   const renderCompletedWorkouts = () => {
@@ -73,6 +75,9 @@ const Gym = () => {
           <View style={styles.leftColumn}>
             <Text style={styles.completedWorkoutName}>
               {completedWorkout.name}
+            </Text>
+            <Text style={styles.completedWorkoutTime}>
+              {`compelete time: ${formatTime(completedWorkout.time)}`}
             </Text>
           </View>
           <View style={styles.rightColumn}>
@@ -111,7 +116,7 @@ const Gym = () => {
   return (
     <ScrollView contentContainerStyle={{ minHeight: height, flexGrow: 1 }}>
       <View style={styles.container}>
-        <View style={{ marginBottom: showInput ? 150 : 0 }}>
+        <View>
           {showButton && (
             <Animated.View>
               <TouchableOpacity
