@@ -1,19 +1,39 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { findIconByRouteName } from "./Helper/icon-render";
+import { styles } from "./style/AppStyle";
 
-// Import the Graph component
 import Graph from "./Graph";
+import Calendar from "./Calendar";
+import Gym from "./Gym";
 
-const Stack = createStackNavigator();
 
-export default function App() {
+const Stack = createBottomTabNavigator();
+
+export default function App(state) {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={({ route }) => ({
+          // deciding which icon to render based on route name
+          tabBarIcon: ({ color, size }) => {
+            const iconName = findIconByRouteName(route.name)
+            return <Ionicons name={iconName} size={size} color={color} />;
+          }
+        })}
+        tabBarStyle={{
+          backgroundColor: "#F5F5F5",
+        }}
+        tabBarActiveTintColor="black"
+        tabBarInactiveTintColor="gray"
+      >
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Graph" component={Graph} />
+        <Stack.Screen name="Calendar" component={Calendar} />
+        <Stack.Screen name="Progress" component={Graph} />
+        <Stack.Screen name="Gym" component={Gym} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -35,31 +55,3 @@ function HomeScreen({ navigation }) {
   );
 }
 
-const styles = StyleSheet.create({
-  homeContainer: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-  },
-  usernameContainer: {
-    fontSize: 24,
-    fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.4)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-    marginTop: "3%",
-  },
-  button: {
-    backgroundColor: '#F5F5F5',
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    marginTop: 20,
-  },
-  buttonText: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: 'black',
-    textAlign: 'center',
-  },
-});
