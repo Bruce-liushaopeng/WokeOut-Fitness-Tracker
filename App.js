@@ -1,23 +1,27 @@
-import { StatusBar } from "expo-status-bar";
-import { Text, View, TouchableOpacity } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { findIconByRouteName } from "./Helper/icon-render";
-import { styles } from "./style/AppStyle";
 
-import Graph from "./Graph";
+import Progress from "./Progress";
 import Calendar from "./Calendar";
 import Gym from "./Gym";
+import Home from "./Home";
 
 
 const Stack = createBottomTabNavigator();
 
-export default function App(state) {
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={({ route }) => ({
+          headerStyle: {
+            backgroundColor: '#F5F5F5', // Set the background color of the header
+          },
+          headerTitleStyle: {
+            fontWeight: 'bold', // Set the font weight of the header text
+          },
           // deciding which icon to render based on route name
           tabBarIcon: ({ color, size }) => {
             const iconName = findIconByRouteName(route.name)
@@ -30,28 +34,11 @@ export default function App(state) {
         tabBarActiveTintColor="black"
         tabBarInactiveTintColor="gray"
       >
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Calendar" component={Calendar} />
-        <Stack.Screen name="Progress" component={Graph} />
+        <Stack.Screen name="Progress" component={Progress} />
         <Stack.Screen name="Gym" component={Gym} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-// HomeScreen component
-function HomeScreen({ navigation }) {
-  return (
-    <View style={styles.homeContainer}>
-      <Text style={styles.usernameContainer}>Hi Bruce</Text>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.navigate("Graph")}
-      >
-        <Text style={styles.buttonText}>Go to Graph</Text>
-      </TouchableOpacity>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-

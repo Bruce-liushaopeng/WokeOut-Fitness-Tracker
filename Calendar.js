@@ -1,9 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
+import { styles } from './style/style';
 
 const Calendar = () => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>I am Calendar </Text>
     </View>
   );
