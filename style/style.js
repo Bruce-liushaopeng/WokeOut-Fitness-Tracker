@@ -135,4 +135,56 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333333',
   },
+  calendarContainer: {
+    width: "88%",
+  },
+
+  calendarPicker: {
+    width: '100%',
+  },
+
+  viewWorkoutDetailButton: {
+    width: "40%"
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 40,
+    paddingTop: 120,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    borderRadius: 10,
+    padding: 20,
+    width: '90%',
+  },
+  scrollContentContainer: {
+    flexGrow: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingRight: 5,
+  },
+  closeButton: {
+    alignSelf: 'center',
+    borderRadius: 10,
+    paddingHorizontal: 40,
+    paddingVertical: 15,
+    backgroundColor: "rgb(255, 179, 179)",
+    marginTop: 10,
+    marginBottom: 50,
+  },
+  closeButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  noWorkOutFoundText: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "black",
+    textAlign: "center",
+    marginTop: 25
+  },
 });
