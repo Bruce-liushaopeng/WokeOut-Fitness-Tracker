@@ -3,15 +3,22 @@ import { incremented, decremented} from './reducer/counterSlice';
 import { View, TouchableOpacity, Text, StatusBar } from 'react-native';
 import { styles } from './style/style';
 
-function Home({ value, increment, decrement }) {
+function Home({ value, dispatch}) {
+  const handleIncClick = () => {
+    dispatch(incremented());
+  }
+  
+  const handleDecClick = () => {
+    dispatch(decremented());
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.usernameContainer}>Hi Bruce</Text>
       <Text>Count: {value}</Text>
-      <TouchableOpacity style={styles.button} onPress={increment}>
+      <TouchableOpacity style={styles.button} onPress={handleIncClick}>
         <Text style={styles.buttonText}>Increment</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button} onPress={decrement}>
+      <TouchableOpacity style={styles.button} onPress={handleDecClick}>
         <Text style={styles.buttonText}>Decrement</Text>
       </TouchableOpacity>
       <StatusBar style="auto" />
@@ -23,9 +30,6 @@ const mapStateToProps = (state) => ({
   value: state.counter.value, // maping the redux state to the props passing to the component
 });
 
-const mapDispatchToProps = {
-  increment: incremented,
-  decrement: decremented,
-};
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+export default connect(mapStateToProps)(Home);

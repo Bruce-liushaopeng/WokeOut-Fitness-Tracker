@@ -1,10 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { initialState } from '../dummy'
 
 const counterSlice = createSlice({
   name: 'counter',
-  initialState: {
-    value: 0
-  },
+  initialState,
   reducers: {
     incremented: state => {
       console.log("increment called ")

@@ -30,3 +30,8 @@ export const DUMMY_COMPLETED_WORKOUT = [
     time: new Date(2023, 4, 23, 9, 30).getTime(),
   },
 ];
+
+export const initialState = {
+  value: 0,
+  workOutData: DUMMY_COMPLETED_WORKOUT
+}
