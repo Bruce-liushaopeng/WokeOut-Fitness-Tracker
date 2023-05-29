@@ -9,18 +9,25 @@ import {
   Dimensions,
 } from "react-native";
 import { styles } from "./style/style";
-import { DUMMY_COMPLETED_WORKOUT } from "./dummy";
+import { useSelector } from "react-redux";
 import { formatTime } from "./Helper/util";
+import { connect } from 'react-redux';
+import { addNewWorkOut } from "./reducer/gymDataSlice";
 
 const { height } = Dimensions.get("window");
 
-const Gym = () => {
+const Gym = ({dispatch, value, workOutData}) => {
+  const todayDate = new Date()
+  const formatedDate = todayDate.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   const [showButton, setShowButton] = useState(true);
   const [workoutName, setWorkoutName] = useState("");
   const [workoutReps, setWorkoutReps] = useState("");
-  const [completedWorkouts, setCompletedWorkouts] = useState(
-    DUMMY_COMPLETED_WORKOUT
-  );
+  const [completedWorkouts, setCompletedWorkouts] = useState(workOutData);
   const [showInput, setShowInput] = useState(false);
   const [buttonAnimation] = useState(new Animated.Value(0));
   const [workoutWeights, setWorkoutWeights] = useState([]);
@@ -48,6 +55,7 @@ const Gym = () => {
         time: new Date().getTime(),
       };
       setCompletedWorkouts([...completedWorkouts, workout]);
+      dispatch(addNewWorkOut({ workout }));
       setWorkoutName("");
       setWorkoutReps("");
       setWorkoutWeights([]);
@@ -117,6 +125,7 @@ const Gym = () => {
     <ScrollView contentContainerStyle={{ minHeight: height, flexGrow: 1 }}>
       <View style={styles.container}>
         <View>
+        <Text style={styles.buttonText}>{formatedDate}</Text>
           {showButton && (
             <Animated.View>
               <TouchableOpacity
@@ -170,4 +179,9 @@ const Gym = () => {
   );
 };
 
-export default Gym;
+const mapStateToProps = (state) => ({
+  value: state.gymData.value,
+  workOutData: state.gymData.workOutData
+});
+
+export default connect(mapStateToProps)(Gym);

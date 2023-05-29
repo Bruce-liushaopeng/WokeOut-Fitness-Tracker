@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { incremented, decremented} from './reducer/counterSlice';
+import { incremented, decremented} from './reducer/gymDataSlice';
 import { View, TouchableOpacity, Text, StatusBar } from 'react-native';
 import { styles } from './style/style';
 
@@ -27,7 +27,7 @@ function Home({ value, dispatch}) {
 }
 
 const mapStateToProps = (state) => ({
-  value: state.counter.value, // maping the redux state to the props passing to the component
+  value: state.gymData.value, // maping the redux state to the props passing to the component
 });
 
 

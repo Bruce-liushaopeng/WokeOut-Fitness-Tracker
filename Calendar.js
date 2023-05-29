@@ -37,7 +37,6 @@ const renderCompletedWorkouts = (compeletedWorkouts) => {
 const initialMarkedDate = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
 console.log(initialMarkedDate)
 const Calendar = ({navigation}) => {
-  console.log("render Calendar page")
   const [selectedDate, setSelectedDate] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [workoutsOnSpecificDate, setWorkoutsOnSpecificDate] = useState([]);
