@@ -1,0 +1,40 @@
+<mxfile host="app.diagrams.net" modified="2023-05-29T17:53:31.837Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36" etag="XtY_aFSDe29r9aI_UAnt" version="21.3.0" type="device">
+  <diagram name="Page-1" id="uWuVtTpHCcRU3g2bCTeM">
+    <mxGraphModel dx="640" dy="648" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="fKU16cPFryIiKXFbscux-3" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="fKU16cPFryIiKXFbscux-1" target="fKU16cPFryIiKXFbscux-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-1" value="reducerSlice" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="140" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-2" value="defiends initial states and callable actions" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="140" width="250" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-12" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="fKU16cPFryIiKXFbscux-5" target="fKU16cPFryIiKXFbscux-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-13" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.025;entryY=0.4;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="fKU16cPFryIiKXFbscux-5" target="fKU16cPFryIiKXFbscux-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-14" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.017;entryY=0.415;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="fKU16cPFryIiKXFbscux-5" target="fKU16cPFryIiKXFbscux-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-5" value="reducerStore&lt;br&gt;&quot;configureStore()&quot;" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="320" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-9" value="dispatch: modify the state" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="430" y="280" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-10" value="subscribe: get notify when state change" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="425" y="400" width="200" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="fKU16cPFryIiKXFbscux-11" value="retrieve: retrieve the entire state tree" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="425" y="520" width="200" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -36,12 +36,24 @@ const renderCompletedWorkouts = (compeletedWorkouts) => {
 };
 const initialMarkedDate = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
 console.log(initialMarkedDate)
-const Calendar = () => {
+const Calendar = ({navigation}) => {
+  console.log("render Calendar page")
   const [selectedDate, setSelectedDate] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [workoutsOnSpecificDate, setWorkoutsOnSpecificDate] = useState([]);
   const [markedDates, setMarkedDates] = useState(initialMarkedDate);
+  const [reloadCalendar, setReloadCalendar] = useState(false); // New state to trigger re-rendering
+
   //const markedDates = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
+
+    // Add this useEffect to handle re-rendering when navigating to the Calendar page
+    useEffect(() => {
+      const unsubscribe = navigation.addListener("focus", () => {
+        setReloadCalendar((prev) => !prev);
+      });
+  
+      return unsubscribe;
+    }, [navigation]);
 
   const filterWorkoutsByDate = (date) => {
     return DUMMY_COMPLETED_WORKOUT.filter((workout) => {
