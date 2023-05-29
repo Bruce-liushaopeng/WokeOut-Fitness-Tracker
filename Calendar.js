@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
 import { Calendar as CalendarPicker } from "react-native-calendars";
 import { styles } from "./style/style";
-import { generateMarkedDates, formatTime } from "./Helper/util";
+import {
+  generateMarkedDates,
+  formatTime,
+  addSelectedProperties,
+} from "./Helper/util";
 import { DUMMY_COMPLETED_WORKOUT } from "./dummy";
 
-const renderCompletedWorkouts = () => {
-  return DUMMY_COMPLETED_WORKOUT.slice()
+const renderCompletedWorkouts = (compeletedWorkouts) => {
+  return compeletedWorkouts
+    .slice()
     .reverse()
     .map((completedWorkout, index) => (
       <View key={index} style={styles.completedWorkoutContainerRow}>
@@ -33,13 +38,39 @@ const renderCompletedWorkouts = () => {
 const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [workoutsOnSpecificDate, setWorkoutsOnSpecificDate] = useState([]);
+  const originalMarkedDates = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
+  const [markedDates, setMarkedDates] = useState(generateMarkedDates(DUMMY_COMPLETED_WORKOUT));
+  
+  //const markedDates = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
 
-  const markedDates = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
+  useEffect(() => {
+    if (selectedDate) {
+      console.log("selected date: " + selectedDate)
+      const filteredWorkouts = filterWorkoutsByDate(selectedDate);
+      setWorkoutsOnSpecificDate(filteredWorkouts);
+    }
+  }, [selectedDate]);
+
+  const filterWorkoutsByDate = (date) => {
+    return DUMMY_COMPLETED_WORKOUT.filter(
+      (workout) => {
+        console.log(workout)
+        const workoutDate = new Date(workout.time);
+        console.log(workoutDate)
+        console.log(workoutDate.toISOString().split("T")[0])
+        console.log("date parameter" + date)
+        return workoutDate.toISOString().split("T")[0] === date})
+  };
+
+
   console.log(markedDates.hasOwnProperty(selectedDate));
 
   const handleDateSelect = (date) => {
     setSelectedDate(date.dateString);
+    setMarkedDates(addSelectedProperties(originalMarkedDates, date.dateString))
     console.log(date.dateString);
+    console.log(filterWorkoutsByDate(date.dateString));
   };
 
   const handleDetailButtonPress = () => {
@@ -54,7 +85,7 @@ const Calendar = () => {
 
   return (
     <View style={styles.container}>
-       <View style={styles.calendarContainer}>
+      <View style={styles.calendarContainer}>
         <CalendarPicker
           markedDates={markedDates}
           onDayPress={handleDateSelect}
@@ -63,7 +94,7 @@ const Calendar = () => {
       </View>
       {selectedDate ? (
         <View>
-          {markedDates.hasOwnProperty(selectedDate) ? (
+          {markedDates.hasOwnProperty(selectedDate) && markedDates[selectedDate].marked ? ( // checking if the selected date has workout data exists
             <TouchableOpacity
               style={styles.button}
               onPress={handleDetailButtonPress}
@@ -74,7 +105,9 @@ const Calendar = () => {
             <Text style={styles.noWorkOutFoundText}>No Workout Found</Text>
           )}
         </View>
-      ) : <Text style={styles.buttonText}>Pick a date to view detail</Text>}
+      ) : (
+        <Text style={styles.buttonText}>Pick a date to view detail</Text>
+      )}
 
       <Modal
         visible={isModalVisible}
@@ -85,13 +118,12 @@ const Calendar = () => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <ScrollView contentContainerStyle={styles.scrollContentContainer}>
-              {renderCompletedWorkouts()}
+              {renderCompletedWorkouts(workoutsOnSpecificDate)}
             </ScrollView>
-            
           </View>
           <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-              <Text style={styles.closeButtonText}>Close</Text>
-            </TouchableOpacity>
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
         </View>
       </Modal>
     </View>
