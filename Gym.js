@@ -16,7 +16,7 @@ import { addNewWorkOut } from "./reducer/gymDataSlice";
 
 const { height } = Dimensions.get("window");
 
-const Gym = ({dispatch, value, workOutData}) => {
+const Gym = ({dispatch, workOutData}) => {
   const todayDate = new Date()
   const formatedDate = todayDate.toLocaleDateString("en-US", {
     year: "numeric",
@@ -180,7 +180,6 @@ const Gym = ({dispatch, value, workOutData}) => {
 };
 
 const mapStateToProps = (state) => ({
-  value: state.gymData.value,
   workOutData: state.gymData.workOutData
 });
 
