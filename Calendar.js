@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
 import { Calendar as CalendarPicker } from "react-native-calendars";
 import { styles } from "./style/style";
@@ -34,47 +34,32 @@ const renderCompletedWorkouts = (compeletedWorkouts) => {
       </View>
     ));
 };
-
+const initialMarkedDate = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
+console.log(initialMarkedDate)
 const Calendar = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [workoutsOnSpecificDate, setWorkoutsOnSpecificDate] = useState([]);
-  const originalMarkedDates = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
-  const [markedDates, setMarkedDates] = useState(generateMarkedDates(DUMMY_COMPLETED_WORKOUT));
-  
+  const [markedDates, setMarkedDates] = useState(initialMarkedDate);
   //const markedDates = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
 
-  useEffect(() => {
-    if (selectedDate) {
-      console.log("selected date: " + selectedDate)
-      const filteredWorkouts = filterWorkoutsByDate(selectedDate);
-      setWorkoutsOnSpecificDate(filteredWorkouts);
-    }
-  }, [selectedDate]);
-
   const filterWorkoutsByDate = (date) => {
-    return DUMMY_COMPLETED_WORKOUT.filter(
-      (workout) => {
-        console.log(workout)
-        const workoutDate = new Date(workout.time);
-        console.log(workoutDate)
-        console.log(workoutDate.toISOString().split("T")[0])
-        console.log("date parameter" + date)
-        return workoutDate.toISOString().split("T")[0] === date})
+    return DUMMY_COMPLETED_WORKOUT.filter((workout) => {
+      const workoutDate = new Date(workout.time);
+      return workoutDate.toISOString().split("T")[0] === date;
+    });
   };
 
 
-  console.log(markedDates.hasOwnProperty(selectedDate));
-
   const handleDateSelect = (date) => {
     setSelectedDate(date.dateString);
-    setMarkedDates(addSelectedProperties(originalMarkedDates, date.dateString))
-    console.log(date.dateString);
-    console.log(filterWorkoutsByDate(date.dateString));
+    setMarkedDates(addSelectedProperties(initialMarkedDate, date.dateString));
   };
 
   const handleDetailButtonPress = () => {
     if (selectedDate) {
+      const filteredWorkouts = filterWorkoutsByDate(selectedDate);
+      setWorkoutsOnSpecificDate(filteredWorkouts);
       setIsModalVisible(true);
     }
   };
@@ -94,7 +79,9 @@ const Calendar = () => {
       </View>
       {selectedDate ? (
         <View>
-          {markedDates.hasOwnProperty(selectedDate) && markedDates[selectedDate].marked ? ( // checking if the selected date has workout data exists
+          {
+          markedDates.hasOwnProperty(selectedDate) &&
+          markedDates[selectedDate].marked ? ( // checking if the selected date has workout data
             <TouchableOpacity
               style={styles.button}
               onPress={handleDetailButtonPress}

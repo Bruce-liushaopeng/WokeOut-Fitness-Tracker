@@ -7,7 +7,7 @@ export const formatTime = (time) => {
 
 export const generateMarkedDates = (completedWorkouts) => {
   const markedDates = {};
-
+  console.log(" generate marked dates called")
   completedWorkouts.forEach((workout) => {
     const date = new Date(workout.time);
     const dateString = date.toISOString().split("T")[0];
@@ -20,15 +20,10 @@ export const generateMarkedDates = (completedWorkouts) => {
 
 export const addSelectedProperties = (markedDates, selectedDate) => {
   const modifiedMarkedDates = { ...markedDates };
-
-  if (modifiedMarkedDates[selectedDate]) {
-    modifiedMarkedDates[selectedDate].selected = true;
-    modifiedMarkedDates[selectedDate].selectedColor = "#99ccff";
-  } else {
     modifiedMarkedDates[selectedDate] = {
+      ...modifiedMarkedDates[selectedDate], // keeping the marked property but not overwriting
       selected: true,
       selectedColor: "#99ccff",
-    };
   }
 
   return modifiedMarkedDates;
