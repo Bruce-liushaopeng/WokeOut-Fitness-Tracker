@@ -1,13 +1,15 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { View, Text, TouchableOpacity, Modal, ScrollView } from "react-native";
 import { Calendar as CalendarPicker } from "react-native-calendars";
+import { connect } from "react-redux";
 import { styles } from "./style/style";
+
 import {
   generateMarkedDates,
   formatTime,
   addSelectedProperties,
+  generateTimeStringFromDate,
 } from "./Helper/util";
-import { DUMMY_COMPLETED_WORKOUT } from "./dummy";
 
 const renderCompletedWorkouts = (compeletedWorkouts) => {
   return compeletedWorkouts
@@ -34,33 +36,36 @@ const renderCompletedWorkouts = (compeletedWorkouts) => {
       </View>
     ));
 };
-const initialMarkedDate = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
-console.log(initialMarkedDate)
-const Calendar = ({navigation}) => {
+
+const Calendar = ({ navigation, workOutData }) => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [workoutsOnSpecificDate, setWorkoutsOnSpecificDate] = useState([]);
+  const initialMarkedDate = useMemo(() => {
+    return generateMarkedDates(workOutData);
+  }, [workOutData]);
   const [markedDates, setMarkedDates] = useState(initialMarkedDate);
   const [reloadCalendar, setReloadCalendar] = useState(false); // New state to trigger re-rendering
 
   //const markedDates = generateMarkedDates(DUMMY_COMPLETED_WORKOUT);
 
-    // Add this useEffect to handle re-rendering when navigating to the Calendar page
-    useEffect(() => {
-      const unsubscribe = navigation.addListener("focus", () => {
-        setReloadCalendar((prev) => !prev);
-      });
-  
-      return unsubscribe;
-    }, [navigation]);
+  // Add this useEffect to handle re-rendering when navigating to the Calendar page
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setReloadCalendar((prev) => !prev);
+      setMarkedDates(initialMarkedDate)
+    });
+
+    return unsubscribe;
+  }, [navigation]);
 
   const filterWorkoutsByDate = (date) => {
-    return DUMMY_COMPLETED_WORKOUT.filter((workout) => {
+    console.log("target date" + date)
+    return workOutData.filter((workout) => {
       const workoutDate = new Date(workout.time);
-      return workoutDate.toISOString().split("T")[0] === date;
+      return generateTimeStringFromDate(workoutDate) === date;
     });
   };
-
 
   const handleDateSelect = (date) => {
     setSelectedDate(date.dateString);
@@ -90,8 +95,7 @@ const Calendar = ({navigation}) => {
       </View>
       {selectedDate ? (
         <View>
-          {
-          markedDates.hasOwnProperty(selectedDate) &&
+          {markedDates.hasOwnProperty(selectedDate) &&
           markedDates[selectedDate].marked ? ( // checking if the selected date has workout data
             <TouchableOpacity
               style={styles.button}
@@ -128,4 +132,8 @@ const Calendar = ({navigation}) => {
   );
 };
 
-export default Calendar;
+const mapStateToProps = (state) => ({
+  workOutData: state.gymData.workOutData,
+});
+
+export default connect(mapStateToProps)(Calendar);

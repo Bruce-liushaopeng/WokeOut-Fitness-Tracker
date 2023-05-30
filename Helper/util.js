@@ -7,16 +7,26 @@ export const formatTime = (time) => {
 
 export const generateMarkedDates = (completedWorkouts) => {
   const markedDates = {};
-  console.log(" generate marked dates called")
   completedWorkouts.forEach((workout) => {
     const date = new Date(workout.time);
-    const dateString = date.toISOString().split("T")[0];
-
+    const dateString = generateTimeStringFromDate(date);
     markedDates[dateString] = { marked: true };
   });
 
   return markedDates;
 };
+
+export const generateTimeStringFromDate = (dateObj) => {
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const dateList = dateObj.toLocaleDateString('en-US', options).split('/') //   05/25/2023
+    
+    const niceOrderedDateList = []
+    niceOrderedDateList[0] = dateList[2]
+    niceOrderedDateList[1] = dateList[0]
+    niceOrderedDateList[2] = dateList[1]
+    const dateString = niceOrderedDateList.join('-')
+    return dateString
+}
 
 export const addSelectedProperties = (markedDates, selectedDate) => {
   const modifiedMarkedDates = { ...markedDates };

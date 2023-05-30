@@ -20,7 +20,6 @@ const gymDataSlice = createSlice({
     addNewWorkOut: (state, action) => {
       const { workout } = action.payload;
       state.workOutData.push(workout);
-      console.log(state.workOutData)
     },
   },
 });

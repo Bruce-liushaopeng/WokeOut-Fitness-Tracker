@@ -9,7 +9,6 @@ import {
   Dimensions,
 } from "react-native";
 import { styles } from "./style/style";
-import { useSelector } from "react-redux";
 import { formatTime } from "./Helper/util";
 import { connect } from 'react-redux';
 import { addNewWorkOut } from "./reducer/gymDataSlice";
